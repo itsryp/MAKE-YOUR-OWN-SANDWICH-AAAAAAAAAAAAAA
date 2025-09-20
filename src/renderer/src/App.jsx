@@ -40,7 +40,8 @@ function App() {
       <h1>MAKE YOUR OWN SANDWICH!!</h1>
       <div
         style={{
-          height: '600px'
+          width: '100%',
+          height: '50vh'
         }}
       >
         {mySAMMICH.map((layer, index) => {
@@ -61,7 +62,8 @@ function App() {
       </div>
       <div
         style={{
-          display: 'flex'
+          display: 'flex',
+          height: '50vh'
         }}>
         {
           <div

@@ -1,32 +1,80 @@
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
+import { useState } from "react"
 
 function App() {
   const ipcHandle = () => window.electron.ipcRenderer.send('ping')
+  const toppings = [
+    "bred.PNG",
+    "bacon.PNG",
+    "chemse.PNG",
+    "lettuce.PNG",
+    "mati sauce.PNG",
+    "mayo.PNG",
+    "mustard.PNG",
+    "pickles.PNG",
+    "salami.PNG",
+    "tomato.PNG",
+    "ham.PNG"
+  ];
+
+  const [currentTopping, setCurrentTopping] = useState(0);
+  const [mySAMMICH, setMySAMMICH] = useState([]);
+
+  const handleNext = () => {
+    currentTopping < toppings.length - 1 ? 
+    setCurrentTopping(currentTopping + 1) :
+    setCurrentTopping(0);
+  }
+
+    const handlePrev = () => {
+    currentTopping !== 0 ? 
+    setCurrentTopping(currentTopping - 1) :
+    setCurrentTopping(toppings.length - 1);
+  }
+
+  const handleAdd =  () => {
+    setMySAMMICH([...mySAMMICH, toppings[currentTopping]]);
+  }
 
   return (
     <>
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-        </div>
-      </div>
-      <Versions></Versions>
+    <h1>MAKE YOUR OWN SANDWICH!!</h1>
+     <div style={{
+      height: '600px'
+     }}>
+      {mySAMMICH.map((layer, index) => {
+        const position = 200 - (index * 10);
+        return <img src={layer} 
+          style={{
+            height:'600px',
+            position:'fixed',
+            left: '150px',
+            top: `${position}px`
+          }}
+        ></img>
+      })}
+      
+     </div>
+     <div style={{
+      display:"flex"
+     }}>
+      <button style={{
+        height:"50px"
+      }}
+      onClick={handlePrev}
+      >prev</button>
+      {<img src={toppings[currentTopping]} 
+      style={{
+        height:'600px'
+      }}
+      ></img>}
+      <button style={{
+        height:"50px"
+      }}
+      onClick={handleNext}
+      >
+        next</button>
+     </div>
+     <button onClick={handleAdd}>ADD ME</button>
     </>
   )
 }
